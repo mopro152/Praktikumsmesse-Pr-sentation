@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Praktikum | Tischlerei Brake</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            --bg-dark: #0f0f0f;
-            --surface: #1a1a1a;
-            /* NEU: Dunklerer Walnuss-Ton als Akzent */
-            --accent: #8b5a2b; 
-            --text-primary: #ffffff;
-            --text-secondary: #c0c0c0;
-            --glass: rgba(25, 25, 25, 0.8);
+            --bg-dark: #12100e; /* Sehr dunkles Braun/Schwarz */
+            --surface: #1e1b18;
+            --accent: #8b5a2b; /* Walnuss-Ton */
+            --text-primary: #f0f0f0;
+            --text-secondary: #d4d4d4;
+            --glass: rgba(20, 20, 20, 0.9); /* Weniger transparent für bessere Lesbarkeit */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -29,12 +28,15 @@
             overflow-x: hidden;
         }
 
-        /* NEUES HINTERGRUNDBILD: Werkbank, Späne, Walnuss-Optik, keine Personen */
+        /* HINTERGRUND: Neue Bildquelle */
         .bg-image {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
-            background-image: linear-gradient(to bottom, rgba(15,15,15,0.5), var(--bg-dark)), 
-                              url('https://images.unsplash.com/photo-1610563076753-477127614862?q=80&w=2070&auto=format&fit=crop');
+            /* Fallback Farbe, falls Bild nicht lädt */
+            background-color: #2b221a;
+            /* Werkstatt Bild */
+            background-image: linear-gradient(to bottom, rgba(18,16,14,0.7), var(--bg-dark)), 
+                              url('https://images.unsplash.com/photo-1581783342308-f792ca11df53?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             z-index: -1;
@@ -47,7 +49,7 @@
         }
 
         header {
-            min-height: 70vh; 
+            min-height: 60vh; 
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -55,23 +57,22 @@
         }
 
         h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             line-height: 1.1;
             margin: 0 0 15px 0;
-            font-weight: 700;
-            text-shadow: 0 5px 20px rgba(0,0,0,1);
+            font-weight: 600;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: #ddd;
+            font-size: 1.1rem;
+            color: #e0e0e0;
             max-width: 90%;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
-            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            font-weight: 400;
         }
 
-        /* Hervorhebung für wichtige Infos im Text */
-        .highlight { color: var(--accent); font-weight: 700; }
+        .highlight { color: var(--accent); font-weight: 600; }
 
         .scroll-indicator {
             position: absolute; bottom: 30px; left: 50%;
@@ -82,43 +83,44 @@
 
         .card {
             background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 24px;
-            padding: 0 25px;
-            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 0 24px;
+            margin-bottom: 16px;
             cursor: pointer;
             overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            height: 85px; position: relative;
+            transition: all 0.5s ease;
+            height: 80px; position: relative;
         }
 
         .card.active {
             height: auto; min-height: 200px;
-            background: rgba(35, 35, 35, 0.98);
+            background: rgba(30, 27, 24, 0.98);
             border-color: var(--accent);
-            transform: scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .card-header {
-            height: 85px; display: flex; align-items: center; justify-content: space-between;
+            height: 80px; display: flex; align-items: center; justify-content: space-between;
         }
 
         .card-title {
-            font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 15px;
+            font-size: 1.1rem; font-weight: 600; display: flex; align-items: center; gap: 15px;
             color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .card-number {
-            font-size: 0.9rem; color: var(--accent); font-family: monospace; opacity: 0.9;
+            font-size: 0.9rem; color: var(--accent); font-family: monospace;
         }
 
         .icon-btn {
-            width: 38px; height: 38px; background: rgba(255,255,255,0.15);
+            width: 32px; height: 32px; background: rgba(255,255,255,0.1);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s ease, background 0.4s ease;
+            transition: transform 0.4s ease;
         }
 
         .card.active .icon-btn {
@@ -126,29 +128,27 @@
         }
 
         .card-content {
-            opacity: 0; transform: translateY(20px); transition: all 0.4s ease 0.1s;
-            padding-bottom: 30px; color: var(--text-secondary); line-height: 1.7; font-size: 1rem;
+            opacity: 0; transform: translateY(10px); transition: all 0.4s ease 0.1s;
+            padding-bottom: 30px; color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem;
         }
 
         .card.active .card-content { opacity: 1; transform: translateY(0); }
 
-        /* Spezieller Link-Style für E-Mail */
         .contact-link {
-            color: var(--accent); text-decoration: none; font-weight: 700;
-            display: block; margin-top: 15px; word-break: break-all;
+            color: var(--accent); text-decoration: none; font-weight: 600;
+            display: block; margin-top: 10px; word-break: break-all;
         }
 
-        /* Insider-Tipp Box */
-        .insider-tip {
-            margin-top: 20px;
-            border-left: 3px solid var(--accent);
-            padding-left: 15px;
-            font-style: italic;
-            color: #ddd;
-            background: rgba(255,255,255,0.05);
-            padding: 10px 15px;
-            border-radius: 0 10px 10px 0;
+        .info-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 8px 8px 0;
         }
+
+        ul { padding-left: 20px; margin: 10px 0; }
+        li { margin-bottom: 8px; }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
@@ -165,7 +165,7 @@
         
         <header data-aos="fade-in" data-aos-duration="1500">
             <h1>Tischlerei<br><span style="color: var(--accent);">Brake</span></h1>
-            <p class="subtitle">Mein Praktikum 2025 in Rhauderfehn</p>
+            <p class="subtitle">Praktikumsbericht Rhauderfehn 2025</p>
             
             <div class="scroll-indicator">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
@@ -176,55 +176,69 @@
 
             <div class="card" onclick="this.classList.toggle('active')" data-aos="fade-up">
                 <div class="card-header">
-                    <div class="card-title"><span class="card-number">01</span>Bewerbung & Tipp</div>
+                    <div class="card-title"><span class="card-number">01</span>Der Betrieb</div>
                     <div class="icon-btn">＋</div>
                 </div>
                 <div class="card-content">
-                    <p>Wie habe ich den Platz bekommen? Ich habe einfach <strong>vor Ort nachgefragt</strong>, der Rest lief dann unkompliziert übers Telefon.</p>
-                    <p>Mein dringender Rat zur Kontaktaufnahme: <span class="highlight">Ruft an oder geht persönlich vorbei!</span> Von E-Mails rate ich ab, das ist im Handwerk oft der schlechtere Weg.</p>
-                    
-                    <div class="insider-tip">
-                        <strong>Insider-Tipp:</strong> Fragt nicht zu spät an! Es scheint, dass tatsächlich mehr Schüler als gedacht ein Praktikum in einer Tischlerei machen möchten.
+                    <p>Die Tischlerei Brake deckt ein breites Spektrum ab. Entgegen dem Trend zur reinen Fenstermontage wird hier noch vielfältiges Handwerk betrieben:</p>
+                    <ul>
+                        <li>Bau von Kleinmöbeln</li>
+                        <li>Komplette Zimmereinrichtungen</li>
+                        <li>Hochwertiger <strong>Yachtinnenausbau</strong></li>
+                    </ul>
+                    <div class="info-box">
+                        <strong>Das Team:</strong><br>
+                        Es handelt sich um ein verhältnismäßig kleines Team, wodurch viel Wert auf gute Zusammenarbeit gelegt wird. Alle Mitarbeiter sind sehr freundlich. Positiv ist zudem, dass es kein reiner Männerbetrieb ist – auch weibliche Angestellte sind dort tätig.
                     </div>
                 </div>
             </div>
 
             <div class="card" onclick="this.classList.toggle('active')" data-aos="fade-up" data-aos-delay="100">
                 <div class="card-header">
-                    <div class="card-title"><span class="card-number">02</span>Die Hard Facts</div>
+                    <div class="card-title"><span class="card-number">02</span>Arbeitszeiten</div>
                     <div class="icon-btn">＋</div>
                 </div>
                 <div class="card-content">
-                    <p style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;"><strong>Tischlerei Brake</strong></p>
-                    <p>Croneallee 8, 26817 Rhauderfehn</p>
+                    <p><strong>Standort:</strong><br>Croneallee 8, 26817 Rhauderfehn</p>
                     
-                    <p style="margin-top: 25px; margin-bottom: 10px;"><span class="highlight">Arbeitszeiten:</span></p>
-                    <ul style="padding-left: 20px; color: #ddd;">
-                        <li style="margin-bottom: 10px;"><strong>Mo – Do:</strong> 07:00 – 16:45 Uhr<br>(Frühstückspause um 9:00 Uhr, Mittagspause um 13:00 Uhr)</li>
-                        <li><strong>Fr:</strong> 07:00 – 12:15 Uhr (Früher Feierabend!)</li>
+                    <p style="margin-top: 20px;"><strong>Die Zeiten:</strong></p>
+                    <ul>
+                        <li><strong>Mo – Do:</strong> 07:00 – 16:45 Uhr</li>
+                        <li><strong>Fr:</strong> 07:00 – 12:15 Uhr</li>
                     </ul>
+                    <p style="font-size: 0.9rem; color: #aaa;">Pausen: Frühstück um 9:00 Uhr, Mittag um 13:00 Uhr.</p>
                 </div>
             </div>
 
             <div class="card" onclick="this.classList.toggle('active')" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-header">
-                    <div class="card-title"><span class="card-number">03</span>Mein Fazit</div>
+                    <div class="card-title"><span class="card-number">03</span>Bewerbung</div>
                     <div class="icon-btn">＋</div>
                 </div>
                 <div class="card-content">
-                    <p>Würde ich es wieder machen? <span class="highlight">Definitiv.</span></p>
-                    <p>Auch wenn die Arbeitsstunden anstrengend waren und man besonders die ersten Tage erschöpft nach Hause kommt, hat mir das Praktikum sehr gut gefallen. Ich halte es für sehr lehrreich und absolut empfehlenswert.</p>
-                    <p style="font-style: italic; color: var(--accent);">Und als kleiner Bonus: Der Schlaf danach ist umso besser.</p>
+                    <p>Ich habe mich persönlich vor Ort nach dem Platz erkundigt, die weitere Absprache erfolgte telefonisch. Von einer Bewerbung per E-Mail rate ich ab, da der persönliche Kontakt oder ein Anruf hier besser funktionieren.</p>
+                    
+                    <p style="margin-top: 15px;"><strong>Kontakttelefon:</strong><br>
+                    <a href="tel:04967914142" class="contact-link" style="font-size: 1.1rem;">04967 914142</a></p>
+
+                    <div class="info-box">
+                        <strong>Tipp:</strong> Den Praktikumsplatz möglichst früh anfragen. Die Nachfrage nach Plätzen in Tischlereien ist aktuell höher als erwartet.
+                    </div>
                 </div>
             </div>
 
             <div class="card" onclick="this.classList.toggle('active')" data-aos="fade-up" data-aos-delay="300">
                 <div class="card-header">
-                    <div class="card-title"><span class="card-number">04</span>Noch Fragen?</div>
+                    <div class="card-title"><span class="card-number">04</span>Fazit</div>
                     <div class="icon-btn">＋</div>
                 </div>
                 <div class="card-content">
-                    <p>Falls bei euch Schülern der 10. Klassen noch Fragen zum Betrieb oder dem Ablauf entstehen, könnt ihr mich gerne hier erreichen:</p>
+                    <p>Auch wenn die Arbeitstage lang waren und ich besonders zu Beginn erschöpft nach Hause kam, war das Praktikum sehr lehrreich. Der Schlaf danach ist umso besser.</p>
+                    <p>Aufgrund der vielseitigen Aufgaben und des guten Betriebsklimas würde ich das Praktikum definitiv wieder dort absolvieren und kann es empfehlen.</p>
+                    
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+                    
+                    <p>Falls Fragen zum Praktikum bestehen, bin ich unter dieser E-Mail erreichbar:</p>
                     <a href="mailto:moritz.probst@gymnasium-rhauderfehn.eu" class="contact-link">moritz.probst@gymnasium-rhauderfehn.eu</a>
                 </div>
             </div>
@@ -233,6 +247,6 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script> AOS.init({ duration: 1000, once: true, easing: 'ease-out-quart' }); </script>
+    <script> AOS.init({ duration: 800, once: true, easing: 'ease-out-quad' }); </script>
 </body>
 </html>
